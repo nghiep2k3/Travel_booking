@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    CALL API
+
+    <script>
+        fetch("http://localhost:8081/travel_database/api/detail_tour.php?id=1")
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok " + response.statusText);
+                }
+                return response.json(); // Chuyển đổi kết quả về dạng JSON
+            })
+            .then(data => {
+                console.log("Dữ liệu nhận được:", data.image_tour_detail[0].ImgCrs3);
+            })
+            .catch(error => {
+                console.error("Có lỗi xảy ra:", error); // Xử lý lỗi
+            });
+
+    </script>
+</body>
+
+</html>

@@ -1,53 +1,53 @@
 // Router.js
 import React, { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
-import HomeRouter from "./components/Pages/HomeRouter/HomeRouter";
-import Login from "./components/Pages/Login/Login";
-import Page from "./components/Pages/HomeRouter/Page";
-import Contact from "./components/Pages/HomeRouter/Contact";
-import Cskh from "./components/Pages/Cskh/Cskh";
-import Home from "./components/Pages/Home/Home";
-import Page_404 from "./components/Pages/Page_404/Page_404";
-import TestAntd from "./components/Test/TestAntd";
-import TestArrange from "./components/Test/TestArrange"
-import TestOrder from "./components/Test/TestOrder"
-import CartItem from "./components/Pages/CartItem/CartItem"; 
-import ManagerTour from "./components/Pages/ManagerTour/ManagerTour";
+import HomeRouter from "./Pages/HomeRouter/HomeRouter";
+import Login from "./Pages/Login/Login";
+import Page from "./Pages/HomeRouter/Page";
+import Contact from "./Pages/HomeRouter/Contact";
+import Cskh from "./Pages/Cskh/Cskh";
+import Home from "./Pages/Home/Home";
+import Page_404 from "./Pages/Page_404/Page_404";
+import CartItem from "./Pages/CartItem/CartItem"; 
+import ManagerTour from "./Pages/ManagerTour/ManagerTour";
 
-import TourOut from "./components/Pages/HomeRouter/TourOut";
-import TourAsia from "./components/Pages/HomeRouter/TourForeign/TourAsia";
-import TourAmericars from "./components/Pages/HomeRouter/TourForeign/TourAmericars";
-import TourEurope from "./components/Pages/HomeRouter/TourForeign/TourEurope";
-import TourAutralia from "./components/Pages/HomeRouter/TourForeign/TourAutralia";
+import TourOut from "./Pages/HomeRouter/TourOut";
+import TourAsia from "./Pages/HomeRouter/TourForeign/TourAsia";
+import TourAmericars from "./Pages/HomeRouter/TourForeign/TourAmericars";
+import TourEurope from "./Pages/HomeRouter/TourForeign/TourEurope";
+import TourAutralia from "./Pages/HomeRouter/TourForeign/TourAutralia";
 
-import HaNoi from "./components/Pages/HomeRouter/TourDomestic/MienBac/HaNoi";
-import CaoBang from "./components/Pages/HomeRouter/TourDomestic/MienBac/CaoBang";
-import InfoTourHaNoi from "./components/Pages/DetailTour/MienBac/InfoTourHaNoi";
-import InfoTourCaoBang from "./components/Pages/DetailTour/MienBac/InfoTourCaoBang"
-import InfoTourHaiDuong from "./components/Pages/DetailTour/MienBac/InfoTourHaiDuong"
-import InfoTourHaiPhong from "./components/Pages/DetailTour/MienBac/InfoTourHaiPhong";
-import InfoTourNhaTrang from "./components/Pages/DetailTour/MienTrung/InfoTourNhaTrang"
-import InfoTourDaNang from "./components/Pages/DetailTour/MienTrung/InfoTourDangNang";
-import InfoTourHue from "./components/Pages/DetailTour/MienTrung/InfoTourHue";
-import InfoTourCaiBe from "./components/Pages/DetailTour/MienNam/InfoTourCaiBe"
-import InfoTourPhuQuoc from "./components/Pages/DetailTour/MienNam/InfoTourPhuQuoc"
-import InfoTourPhuQuoc2 from "./components/Pages/DetailTour/MienNam/InfoTourPhuQuoc2"
+import HaNoi from "./Pages/HomeRouter/TourDomestic/MienBac/HaNoi";
+import CaoBang from "./Pages/HomeRouter/TourDomestic/MienBac/CaoBang";
+import InfoTourHaNoi from "./Pages/DetailTour/MienBac/InfoTourHaNoi";
+import InfoTourCaoBang from "./Pages/DetailTour/MienBac/InfoTourCaoBang"
+import InfoTourHaiDuong from "./Pages/DetailTour/MienBac/InfoTourHaiDuong"
+import InfoTourHaiPhong from "./Pages/DetailTour/MienBac/InfoTourHaiPhong";
+import InfoTourNhaTrang from "./Pages/DetailTour/MienTrung/InfoTourNhaTrang"
+import InfoTourDaNang from "./Pages/DetailTour/MienTrung/InfoTourDangNang";
+import InfoTourHue from "./Pages/DetailTour/MienTrung/InfoTourHue";
+import InfoTourCaiBe from "./Pages/DetailTour/MienNam/InfoTourCaiBe"
+import InfoTourPhuQuoc from "./Pages/DetailTour/MienNam/InfoTourPhuQuoc"
+import InfoTourPhuQuoc2 from "./Pages/DetailTour/MienNam/InfoTourPhuQuoc2"
 
-import InfoTourChauAuPhap from "./components/Pages/DetailTour/TourForeign/InfoTourChauAuPhap";
-import InfoTourMy from "./components/Pages/DetailTour/TourForeign/InfoTourMy";
-import InfoTourPhap from "./components/Pages/DetailTour/TourForeign/InfoTourPhap"
-import InfoTourY from "./components/Pages/DetailTour/TourForeign/InfoTourY"
-import InfoTourUc from "./components/Pages/DetailTour/TourForeign/InfoTourUc"
-import InfoTourCanada from "./components/Pages/DetailTour/TourForeign/InfoTourCanada"
-import InfoTourMalaysia from "./components/Pages/DetailTour/TourForeign/InfoTourMalaysia"
-import InfoTourDuThuyen from "./components/Pages/DetailTour/TourForeign/InfoTourDuThuyen"
-import InfoTourHanQuoc from "./components/Pages/DetailTour/TourForeign/InfoTourHanQuoc"
-import InfoTourCampuchia from "./components/Pages/DetailTour/TourForeign/InfoTourCampuchia"
-import InfoTourNamPhi from "./components/Pages/DetailTour/TourForeign/InfoTourNamPhi"
-import InfoTourScotland from "./components/Pages/DetailTour/TourForeign/InfoTourScotland"
+import InfoTourChauAuPhap from "./Pages/DetailTour/TourForeign/InfoTourChauAuPhap";
+import InfoTourMy from "./Pages/DetailTour/TourForeign/InfoTourMy";
+import InfoTourPhap from "./Pages/DetailTour/TourForeign/InfoTourPhap"
+import InfoTourY from "./Pages/DetailTour/TourForeign/InfoTourY"
+import InfoTourUc from "./Pages/DetailTour/TourForeign/InfoTourUc"
+import InfoTourCanada from "./Pages/DetailTour/TourForeign/InfoTourCanada"
+import InfoTourMalaysia from "./Pages/DetailTour/TourForeign/InfoTourMalaysia"
+import InfoTourDuThuyen from "./Pages/DetailTour/TourForeign/InfoTourDuThuyen"
+import InfoTourHanQuoc from "./Pages/DetailTour/TourForeign/InfoTourHanQuoc"
+import InfoTourCampuchia from "./Pages/DetailTour/TourForeign/InfoTourCampuchia"
+import InfoTourNamPhi from "./Pages/DetailTour/TourForeign/InfoTourNamPhi"
+import InfoTourScotland from "./Pages/DetailTour/TourForeign/InfoTourScotland"
 
-import Payments from "./components/Pages/Payments/Payments";
-import Resgiter from "./components/Pages/Resgiter/Register";
+import Payments from "./Pages/Payments/Payments";
+import Resgiter from "./Pages/Resgiter/Register";
+
+import Test from "./Test/Test"
+import TestDetail from "./Test/Detail"
 
 function Router() {
   return (
@@ -64,14 +64,12 @@ function Router() {
 
         <Route path="/" element={<HomeRouter />}>
           <Route path="/Page" element={<Page />} />
+          <Route path="/Test" element={<TestDetail />} />
           <Route path="/ManagerTour" element={<ManagerTour />} />
           <Route path="/CartItem" element={<CartItem />} />
           <Route path="/Contact" element={<Contact />} />
-          <Route path="/TourOut" element={<TourOut />} />
+          <Route path="/TourOut" element={<TourOut />} />``
           <Route path="/Cskh" element={<Cskh />} />
-          <Route path="/TestAntd" element={<TestAntd />} />
-          <Route path="/TestOrder" element={<TestOrder />} />
-          <Route path="/TestArrange" element={<TestArrange />} />
           <Route path="/TourAsia" element={<TourAsia />} />
           <Route path="/TourEurope" element={<TourEurope />} />
           <Route path="/TourAmericars" element={<TourAmericars />} />

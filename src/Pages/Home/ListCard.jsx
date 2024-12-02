@@ -5,91 +5,73 @@ import { database } from "../../firebase";
 import { getDatabase, ref, child, get, set } from "firebase/database";
 import CardItem from "./Card";
 import { Link } from "react-router-dom";
-export default function ListCard() {
-  const dbRef = ref(database);
-  const [data, setData] = useState();
+import url from "../../config";
+import axios from "axios";
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const snapshot = await get(child(dbRef, `TourNew`));
-        if (snapshot.exists()) {
-          console.log("Tour mới nhất");
-          setData(snapshot.val());
-          console.log(snapshot.val());
-        } else {
-          console.log("Không có dữ liệu");
-        }
-      } catch (error) {
-        console.error(error);
-      }
+export default function ListCard() {
+    const dbRef = ref(database);
+    const [data, setData] = useState();
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`${url}/gettourtype.php?type=moi_nhat`);
+                setData(response.data);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    if (!data) {
+        return (
+            <div
+                style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 280,
+                }}
+            >
+                <Spin size="large" />
+            </div>
+        );
+    }
+
+    console.log(data);
+    
+
+    const ListCard = () => {
+        return (
+            <div
+                style={{
+                    display: "flex",
+                    justifyContent: "space-around",
+                    margin: "0 95px",
+                    flexWrap: "wrap",
+                }}
+            >
+                {data.map((item) => (
+                    <Link to={`/detail/${item.id}`} key={item.id}>
+                        <CardItem
+                            price={item.price}
+                            title={item.title}
+                            depart={item.depart}
+                            time={item.time}
+                            priceOld={item.discount ? (item.price * (1 - item.discount / 100)).toFixed(2) : item.price}
+                            imgSrc={item.srcImg}
+                        />
+                    </Link>
+                ))}
+            </div>
+        );
     };
 
-    fetchData();
-  }, []);
-
-  if (!data) {
     return (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: 280,
-        }}
-      >
-        <Spin size="large" />
-      </div>
+        <div>
+            <ListCard />
+        </div>
     );
-  }
-
-  const ListCard = () => {
-    const DataKeys = Object.keys(data);
-    const dataToDisplay = DataKeys.slice(0, 4);
-    //Hiển thị giới hạn
-    // return (
-    //   <div>
-    //     {dataToDisplay.map((productKey) => (
-    //       <Card
-    //         key={productKey}
-    //         name={data[productKey].name}
-    //         price={data[productKey].price}
-    //         imgSrc={data[productKey].img}
-    //       />
-    //     ))}
-    //   </div>
-    // );
-
-    //Hiển thị tất cả
-    return (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-around",
-          margin: "0 95px",
-          flexWrap: "wrap",
-        }}
-      >
-        {Object.keys(data).map((item) => (
-          <Link to={`/${data[item].Link}`}>
-            <CardItem
-              key={item}
-              price={data[item].price}
-              title={data[item].title}
-              depart={data[item].depart}
-              time={data[item].time}
-              priceOld={data[item].price_old}
-              imgSrc={data[item].SrcImg}
-            />
-          </Link>
-        ))}
-      </div>
-    );
-  };
-
-  return (
-    <div>
-      <ListCard></ListCard>
-    </div>
-  );
 }

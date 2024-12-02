@@ -1,9 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import style from "./Test.module.css";
-import { getDatabase, ref, child, get, set } from "firebase/database";
 import { Space, Spin, message } from "antd";
-import { database } from "../firebase";
 import {
     Carousel,
     Button,
@@ -20,16 +18,30 @@ import {
     faCalendarWeek,
     faPaperPlane,
     faPhone,
-    faPlane,
+    faPlane,    
     faTrain,
 } from "@fortawesome/free-solid-svg-icons";
 
-import CardTourMini from "../Component/CardTourMini/CardTourMini";
 import TextArea from "antd/es/input/TextArea";
 import url from "../config";
 import axios from "axios";
 
-export default function Test({ id, title, depart, trip, vehicle, imgSrc, schedule, price_tour }) {
+export default function Test() {
+    const [data, setData] = useState();
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`${url}/detail_tour.php?id=1`);
+                setData(response.data);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+
     // format price
     const formatCurrency = (price) => {
         const formattedPrice = new Intl.NumberFormat('vi-VN').format(price);
@@ -81,7 +93,7 @@ export default function Test({ id, title, depart, trip, vehicle, imgSrc, schedul
 
 
     const onChangeAdult = (value) => {
-        const priceNumber = parseFloat(`${formatCurrency(price_tour[0].price)}`.replace(/\./g, ""));
+        const priceNumber = parseFloat(`${formatCurrency(data.price_tour[0].price)}`.replace(/\./g, ""));
         let x = priceNumber;
 
         setTicket1(value);
@@ -105,7 +117,7 @@ export default function Test({ id, title, depart, trip, vehicle, imgSrc, schedul
     };
 
     const onChangeBaby = (value) => {
-        const priceNumber = parseFloat(`${formatCurrency(price_tour[0].priceEmBe)}`.replace(/\./g, ""));
+        const priceNumber = parseFloat(`${formatCurrency(data.price_tour[0].priceEmBe)}`.replace(/\./g, ""));
         let x = priceNumber;
         console.log(1111, value);
         setTicket2(value);
@@ -129,7 +141,7 @@ export default function Test({ id, title, depart, trip, vehicle, imgSrc, schedul
     };
 
     const onChangeBaby2 = (value) => {
-        const priceNumber = parseFloat(`${formatCurrency(price_tour[0].priceTreEm)}`.replace(/\./g, ""));
+        const priceNumber = parseFloat(`${formatCurrency(data.price_tour[0].priceTreEm)}`.replace(/\./g, ""));
         let x = priceNumber;
         setTicket3(value);
         const totalPrice = value * x;
@@ -225,11 +237,11 @@ export default function Test({ id, title, depart, trip, vehicle, imgSrc, schedul
     const handleAddTour = () => {
         const CallTourCurrent = JSON.parse(localStorage.getItem("tours"));
         const newTour = {
-            id: id,
-            title: `${title}`,
+            id: data.id,
+            title: `${data.title}`,
             ticket: quantityTicket + 1,
             ticketArray: ticketArray,
-            avatar: `${imgSrc[0].ImgCrs1}`,
+            avatar: `${data.image_tour_detail[0].ImgCrs1}`,
             price: `${formatCurrency(TotalMoney)}`,
             date: convertDate(dateString)
         };
@@ -253,16 +265,28 @@ export default function Test({ id, title, depart, trip, vehicle, imgSrc, schedul
         window.location.reload();
     };
 
-    console.log("data", vehicle);
 
-
+    if (!data) {
+        return (
+            <div
+                style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: 280,
+                }}
+            >
+                <Spin size="large" />
+            </div>
+        );
+    }
 
     return (
         <div>
             <div style={{ background: "none", height: "auto" }}>
                 <div style={{ fontSize: 18, marginLeft: 52, fontWeight: 'bold', textTransform: 'uppercase' }}>
                     <Link to="/">Trang chủ</Link> &gt;{" "}
-                    <Link to="/NewTour">Tour mới nhất</Link> &gt; {title}
+                    <Link to="/NewTour">Tour mới nhất</Link> &gt; {data.title}
                 </div>
                 <div className={style.Content_Header}>
                     <div className={style.SetupCarousel}>
@@ -275,19 +299,19 @@ export default function Test({ id, title, depart, trip, vehicle, imgSrc, schedul
                             draggable
                         >
                             <div>
-                                <img src={`${imgSrc[0].ImgCrs1}`} alt="" />
+                                <img src={`${data.image_tour_detail[0].ImgCrs1}`} alt="" />
                             </div>
                             <div>
-                                <img src={`${imgSrc[0].ImgCrs2}`} alt="" />
+                                <img src={`${data.image_tour_detail[0].ImgCrs2}`} alt="" />
                             </div>
                             <div>
-                                <img src={`${imgSrc[0].ImgCrs3}`} alt="" />
+                                <img src={`${data.image_tour_detail[0].ImgCrs3}`} alt="" />
                             </div>
                         </Carousel>
                     </div>
                     <div className={style.ContentTour}>
-                        <h2>{title}</h2>
-                        <p style={{ margin: "10px 0" }}>Hành trình: {trip}</p>
+                        <h2>{data.title}</h2>
+                        <p style={{ margin: "10px 0" }}>Hành trình: {data.trip}</p>
                         <div>
                             <FontAwesomeIcon
                                 icon={faTrain}
@@ -295,7 +319,7 @@ export default function Test({ id, title, depart, trip, vehicle, imgSrc, schedul
                                 style={{ marginRight: "8px" }}
                             />
                             <span style={{ fontSize: 18 }}>
-                                Di chuyển bằng: <span style={{ fontSize: 17, textTransform: 'lowercase', fontWeight: 'bold' }}>{vehicle[0].vehicle3}</span>
+                                Di chuyển bằng: <span style={{ fontSize: 17, textTransform: 'lowercase', fontWeight: 'bold' }}>{data.vehicle[0].vehicle3}</span>
                             </span>
                         </div>
 
@@ -306,7 +330,7 @@ export default function Test({ id, title, depart, trip, vehicle, imgSrc, schedul
                                 style={{ marginRight: "8px" }}
                             />
                             <span style={{ fontSize: 18 }}>
-                                Di chuyển bằng: <span style={{ fontSize: 17, textTransform: 'lowercase', fontWeight: 'bold' }}>{vehicle[0].vehicle2}</span>
+                                Di chuyển bằng: <span style={{ fontSize: 17, textTransform: 'lowercase', fontWeight: 'bold' }}>{data.vehicle[0].vehicle2}</span>
                             </span>
                         </div>
 
@@ -316,7 +340,7 @@ export default function Test({ id, title, depart, trip, vehicle, imgSrc, schedul
                                 size="lg"
                                 style={{ marginRight: "8px" }}
                             />
-                            <span style={{ fontSize: 18 }}>{convertDate(depart)}</span>
+                            <span style={{ fontSize: 18 }}>{convertDate(data.depart)}</span>
                         </div>
 
                         <div>
@@ -418,13 +442,13 @@ export default function Test({ id, title, depart, trip, vehicle, imgSrc, schedul
             </div>
             <div className={style.ButtonNextCarousel}>
                 <p style={{ width: 130 }} onClick={() => handleSlideChange(0)}>
-                    <img style={{ maxWidth: "100%" }} src={`${imgSrc[0].ImgCrs1}`} alt="" />
+                    <img style={{ maxWidth: "100%" }} src={`${data.image_tour_detail[0].ImgCrs1}`} alt="" />
                 </p>
                 <p style={{ width: 130 }} onClick={() => handleSlideChange(1)}>
-                    <img style={{ maxWidth: "100%" }} src={`${imgSrc[0].ImgCrs2}`} alt="" />
+                    <img style={{ maxWidth: "100%" }} src={`${data.image_tour_detail[0].ImgCrs2}`} alt="" />
                 </p>
                 <p style={{ width: 130 }} onClick={() => handleSlideChange(2)}>
-                    <img style={{ maxWidth: "100%" }} src={`${imgSrc[0].ImgCrs3}`} alt="" />
+                    <img style={{ maxWidth: "100%" }} src={`${data.image_tour_detail[0].ImgCrs3}`} alt="" />
                 </p>
             </div>
 
@@ -456,7 +480,7 @@ export default function Test({ id, title, depart, trip, vehicle, imgSrc, schedul
                                 onChange={onChangeAdult}
                             />
                         </div>
-                        <div className={style.div7}>{formatCurrency(price_tour[0].price)}đ</div>
+                        <div className={style.div7}>{formatCurrency(data.price_tour[0].price)}đ</div>
                         <div className={style.div8}>{Adult}</div>
 
                         <div className={style.div9}>Trẻ em</div>
@@ -469,7 +493,7 @@ export default function Test({ id, title, depart, trip, vehicle, imgSrc, schedul
                                 onChange={onChangeBaby}
                             />
                         </div>
-                        <div className={style.div11}>{formatCurrency(price_tour[0].priceEmBe)}đ</div>
+                        <div className={style.div11}>{formatCurrency(data.price_tour[0].priceEmBe)}đ</div>
                         <div className={style.div12}>{Baby}</div>
 
                         <div className={style.div13}>Em bé</div>
@@ -482,7 +506,7 @@ export default function Test({ id, title, depart, trip, vehicle, imgSrc, schedul
                                 onChange={onChangeBaby2}
                             />
                         </div>
-                        <div className={style.div15}>{formatCurrency(price_tour[0].priceTreEm)}đ</div>
+                        <div className={style.div15}>{formatCurrency(data.price_tour[0].priceTreEm)}đ</div>
                         <div className={style.div16}>{Baby2}</div>
                     </div>
 
@@ -569,29 +593,27 @@ export default function Test({ id, title, depart, trip, vehicle, imgSrc, schedul
                 </div>
             </div>
 
-            {/* <div style={{ textAlign: "center", color: "#1ba0e2" }}>
-        <h2>LỊCH TRÌNH TOUR</h2>
-        <div>
-          <div className={style.tl_1}></div>
-          <div className={style.tl_2}></div>
-          <div className={style.tl_1}></div>
-        </div>
-      </div>
-      <div className={style.Article}>
-        <b>NGÀY 1: {data.Des.Day1.title}</b>
-        <p>{data.Des.Day1.description}</p>
+            <div style={{ textAlign: "center", color: "#1ba0e2" }}>
+                <h2>LỊCH TRÌNH TOUR</h2>
+                <div>
+                    <div className={style.tl_1}></div>
+                    <div className={style.tl_2}></div>
+                    <div className={style.tl_1}></div>
+                </div>
+            </div>
+            <div className={style.Article}>
+                {data.schedule.map((item, index) => {
+                    return (
+                        <div key={index}>
+                            <b>NGÀY {index + 1}: {item.title}</b>
+                            <p>{item.content}</p>
+                        </div>
+                    );
+                })}
+            </div>
 
-        <div style={{ marginTop: "10px" }}>
-          <img src={`${data.srcImg}`} alt="" />
-        </div>
-        <br />
-        <b>NGÀY 2: {data.Des.Day2.title}</b>
-        <p>{data.Des.Day2.description}</p>
-        <b>NGÀY 3: {data.Des.Day3.title}</b>
-        <p>{data.Des.Day3.description}</p>
-        <b>NGÀY 4: {data.Des.Day4.title}</b>
-        <p>{data.Des.Day4.description}</p>
-      </div> */}
+
+
         </div>
     );
 }

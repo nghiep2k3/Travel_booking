@@ -273,7 +273,7 @@ const Home = () => {
                     <div>
                         <img
                             style={{ maxWidth: "100%" }}
-                            src="https://tindep.com/wp-content/uploads/2019/10/hinh-nen-1920-1080.jpg"
+                            src="https://api.5wphoto.com/images/competitions/667be1a0b98a8f8fb5686f8f/26-06-2024/01c34edd-77ea-48e6-9350-69ef0fa4b9a2.jpeg"
                             alt=""
                         />
                     </div>
@@ -281,13 +281,6 @@ const Home = () => {
                         <img
                             style={{ maxWidth: "100%" }}
                             src="https://tophinhanhdep.com/wp-content/uploads/2021/10/HD-Mountain-Wallpapers.jpg"
-                            alt=""
-                        />
-                    </div>
-                    <div>
-                        <img
-                            style={{ maxWidth: "100%" }}
-                            src="https://tindep.com/wp-content/uploads/2019/10/hinh-nen-1920-1080-2.jpg"
                             alt=""
                         />
                     </div>

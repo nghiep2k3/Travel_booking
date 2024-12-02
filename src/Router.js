@@ -48,6 +48,8 @@ import Resgiter from "./Pages/Resgiter/Register";
 
 import Test from "./Test/Test"
 import TestDetail from "./Test/Detail"
+import Test2 from "./Test/Test2"
+import DetailTour from "./Component/DetailTour/DetailTour";
 
 function Router() {
   return (
@@ -63,8 +65,9 @@ function Router() {
         
 
         <Route path="/" element={<HomeRouter />}>
-          <Route path="/Page" element={<Page />} />
           <Route path="/Test" element={<TestDetail />} />
+          {/* <Route path="/Test" element={<Test2 />} /> */}
+          <Route path="/Page" element={<Page />} />
           <Route path="/ManagerTour" element={<ManagerTour />} />
           <Route path="/CartItem" element={<CartItem />} />
           <Route path="/Contact" element={<Contact />} />
@@ -78,6 +81,7 @@ function Router() {
           <Route path="/CaoBang" element={<CaoBang />} />
           {/* Detail Tour */}
           <Route path="/InfoTourHaNoi" element={<InfoTourHaNoi />} />
+          <Route path="/detail/:id_tour" element={<DetailTour />} />
           <Route path="/InfoTourCaoBang" element={<InfoTourCaoBang />} />
           <Route path="/InfoTourHaiDuong" element={<InfoTourHaiDuong />} />
           <Route path="/InfoTourHaiPhong" element={<InfoTourHaiPhong />} />

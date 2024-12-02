@@ -62,6 +62,8 @@ class CreateTourAPI
     $this->tour->discount = $_POST['discount'] ?? null;
     $this->tour->time = $_POST['time'] ?? null;
     $this->tour->depart = $_POST['depart'] ?? null;
+    $this->tour->type = $_POST['type'] ?? null;
+    $this->tour->trip = $_POST['trip'] ?? null;
     $this->tour->srcImg = $imageUrl;
 
     // Kiểm tra các giá trị
@@ -81,7 +83,9 @@ class CreateTourAPI
                 "discount" => $this->tour->discount,
                 "time" => $this->tour->time,
                 "srcImg" => $this->tour->srcImg,
-                "depart" => $this->tour->depart
+                "depart" => $this->tour->depart,
+                "type" => $this->tour->type,
+                "trip" => $this->tour->trip
             ]
         ]);
     } else {

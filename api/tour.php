@@ -33,7 +33,8 @@ class TourAPI
                 'time' => $row['time'],
                 'srcImg' => $row['srcImg'],
                 'depart' => $row['depart'],
-                'type' => $row['type']
+                'type' => $row['type'],
+                'trip' => $row['trip'],
             ];
         }
 

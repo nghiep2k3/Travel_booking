@@ -15,57 +15,103 @@ class Detail_tour
         $this->conn = $db;
     }
 
-    private function fetchData($table, $id)
+    public function fetchSchedule($id)
     {
-        $stmt = $this->conn->prepare("SELECT * FROM $table WHERE id = :id");
+        // Sửa lại query để sử dụng id_schedule truyền vào
+        $sql = "SELECT title, content FROM schedule WHERE id_schedule = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['id' => $id]); // Truyền id vào câu lệnh SQL
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Kiểm tra kết quả trả về và tạo mảng dữ liệu
+        return array_map(function ($row) {
+            return [
+                'title' => $row['title'],
+                'content' => $row['content']
+            ];
+        }, $result);
+    }
+
+
+    private function fetchData($table, $id, $additionalCondition = '')
+    {
+        // Kiểm tra lại tên cột trong bảng, dùng id_imgSrc thay vì id
+        $sql = "SELECT * FROM $table WHERE id_query = :id $additionalCondition"; // Đảm bảo dùng id_imgSrc
+        $stmt = $this->conn->prepare($sql);
         $stmt->execute(['id' => $id]);
 
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         return array_map(function ($row) {
             unset($row['id']);
+            unset($row['id_query']);
             return array_filter($row, function ($value) {
-                return !is_null($value);
+                return !is_null($value); // Filter out null values
             });
         }, $results);
     }
 
+
+    // Method to fetch tour information
+    public function fetchTourInfo($id)
+    {
+        $stmt = $this->conn->prepare("SELECT id, title, trip, depart FROM tour WHERE id = :id");
+        $stmt->execute(['id' => $id]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    // Method to check if price_tour exists for the given id
     public function doesPriceTourIdExist($id)
     {
-        $stmt = $this->conn->prepare("SELECT id FROM price_tour WHERE id = :id LIMIT 1");
+        $stmt = $this->conn->prepare("SELECT id_query FROM price_tour WHERE id_query = :id LIMIT 1");
         $stmt->execute(['id' => $id]);
 
         return $stmt->fetch(PDO::FETCH_ASSOC) !== false;
     }
 
+
+
     public function getCombinedData($id)
     {
         if (!$this->doesPriceTourIdExist($id)) {
             $response = [
+                'id' => null,
+                'title' => null,
+                'trip' => null,
+                'depart' => null,
                 'image_tour_detail' => [],
-                'schedule' => [],
-                'price_tour' => []
+                'schedule' => [], // Empty schedule initially
+                'price_tour' => [],
+                'vehicle' => []
             ];
         } else {
             try {
+                // Fetch the tour information
+                $tourInfo = $this->fetchTourInfo($id);
+
+                // Fetch schedule data with id_schedule = 1
+                $schedule = $this->fetchSchedule($id); // Fetch schedule from the 'schedule2' table
+
+                // Fetch other data
                 $imageTourDetail = $this->fetchData('image_tour_detail', $id);
-                $schedule = $this->fetchData('schedule', $id);
                 $priceTour = $this->fetchData('price_tour', $id);
                 $vehicle = $this->fetchData('vehicle', $id);
 
-                $response = [
-                    'image_tour_detail' => $imageTourDetail,
+                // Merge all the fetched data into the response
+                $response = array_merge($tourInfo, [
                     'schedule' => $schedule,
+                    'image_tour_detail' => $imageTourDetail,
                     'price_tour' => $priceTour,
                     'vehicle' => $vehicle
-                ];
+                ]);
             } catch (PDOException $e) {
-                echo "Error: " . $e->getMessage();
+                echo json_encode(["error" => $e->getMessage()]);
                 return;
             }
         }
 
-        header('Content-Type: application/json');
+        // Return the response as JSON
         echo json_encode($response);
     }
 }

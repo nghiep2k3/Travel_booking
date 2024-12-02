@@ -50,9 +50,19 @@ console.log(isSymmetric(arr1)); // Output: true
 console.log(isSymmetric(arr2)); // Output: false
 
 
-function checkSome(arr, x){
+function checkSome(arr, x) {
     return arr.some(item => item == x);
 }
 
 
 console.log(checkSome(arr, 0));
+
+
+var arrItems = []
+let prevNum = numbers[j].num;
+let prevIndex = numbers[j].index;
+arrItems.push({ num: currentNum, index: i });
+console.log(arrItems);
+
+// console.log(11111111, !isNaN(arrItems[1]));
+

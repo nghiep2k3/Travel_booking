@@ -12,6 +12,8 @@ class Tour
     public $time;
     public $srcImg;
     public $depart;
+    public $type;
+    public $trip;
 
     public function __construct($db)
     {
@@ -43,8 +45,8 @@ class Tour
     public function create()
     {
         // Truy vấn SQL để chèn thông tin tour vào cơ sở dữ liệu
-        $query = "INSERT INTO " . $this->table . " (title, price, discount, time, srcImg, depart) 
-                  VALUES (:title, :price, :discount, :time, :srcImg, :depart)";
+        $query = "INSERT INTO " . $this->table . " (title, price, discount, time, srcImg, depart, type, trip) 
+                  VALUES (:title, :price, :discount, :time, :srcImg, :depart, :type, :trip)";
         $stmt = $this->conn->prepare($query);
 
         // Liên kết các giá trị
@@ -54,6 +56,8 @@ class Tour
         $stmt->bindParam(':time', $this->time);
         $stmt->bindParam(':srcImg', $this->srcImg);
         $stmt->bindParam(':depart', $this->depart);
+        $stmt->bindParam(':type', $this->type);
+        $stmt->bindParam(':trip', $this->trip);
 
         // Thực thi truy vấn
         if ($stmt->execute()) {

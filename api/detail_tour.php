@@ -18,7 +18,7 @@ class Detail_tour
     public function fetchSchedule($id)
     {
         // Sửa lại query để sử dụng id_schedule truyền vào
-        $sql = "SELECT title, content FROM schedule WHERE id_schedule = :id";
+        $sql = "SELECT title, content FROM schedule WHERE id_query = :id";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute(['id' => $id]); // Truyền id vào câu lệnh SQL
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);

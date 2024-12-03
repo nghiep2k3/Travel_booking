@@ -23,13 +23,13 @@ class DeleteTourAPI
     public function processDeleteTour()
     {
         if (!empty($this->id)) {
-            // Check if the tour exists
+            // Kiểm tra xem tour có tồn tại hay không
             if ($this->tour->checkTourById($this->id)) {
-                // Delete the tour from the database
-                if ($this->tour->deleteTour($this->id)) {
-                    $this->sendResponse(true, 'Tour has been successfully deleted.');
+                // Gọi phương thức để xóa tour và các dữ liệu liên quan
+                if ($this->tour->deleteRelatedData($this->id)) {
+                    $this->sendResponse(true, 'Tour and all related data have been successfully deleted.');
                 } else {
-                    $this->sendResponse(false, 'Failed to delete the tour.');
+                    $this->sendResponse(false, 'Failed to delete the tour and related data.');
                 }
             } else {
                 $this->sendResponse(false, 'Tour does not exist.');

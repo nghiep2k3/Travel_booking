@@ -4,6 +4,12 @@ class Tour
     private $conn;
     private $table = 'tour';
 
+    // Các bảng liên quan đến tour
+    private $table_schedule = 'schedule';
+    private $table_price_tour = 'price_tour';
+    private $table_vehicle = 'vehicle';
+    private $table_image_tour_detail = 'image_tour_detail';
+
     // Thuộc tính của tour
     public $id;
     public $title;
@@ -110,6 +116,68 @@ class Tour
         return $stmt->execute();
     }
 
+    // Các phương thức xóa dữ liệu liên quan đến tour
 
+    // Xóa dữ liệu trong bảng schedule theo tour_id
+    public function deleteScheduleByTourId($tour_id)
+    {
+        $query = "DELETE FROM " . $this->table_schedule . " WHERE id_query = :tour_id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':tour_id', $tour_id);
+        return $stmt->execute();
+    }
+
+    // Xóa dữ liệu trong bảng price_tour theo tour_id
+    public function deletePriceTourByTourId($tour_id)
+    {
+        $query = "DELETE FROM " . $this->table_price_tour . " WHERE id_query = :tour_id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':tour_id', $tour_id);
+        return $stmt->execute();
+    }
+
+    // Xóa dữ liệu trong bảng vehicle theo tour_id
+    public function deleteVehicleByTourId($tour_id)
+    {
+        $query = "DELETE FROM " . $this->table_vehicle . " WHERE id_query = :tour_id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':tour_id', $tour_id);
+        return $stmt->execute();
+    }
+
+    // Xóa dữ liệu trong bảng image_tour_detail theo tour_id
+    public function deleteImageTourDetailByTourId($tour_id)
+    {
+        $query = "DELETE FROM " . $this->table_image_tour_detail . " WHERE id_query = :tour_id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':tour_id', $tour_id);
+        return $stmt->execute();
+    }
+
+    // Xóa tất cả dữ liệu liên quan đến tour
+    public function deleteRelatedData($tour_id)
+    {
+        // Bắt đầu giao dịch (transaction)
+        $this->conn->beginTransaction();
+
+        try {
+            // Xóa các bản ghi liên quan từ các bảng khác
+            $this->deleteScheduleByTourId($tour_id);
+            $this->deletePriceTourByTourId($tour_id);
+            $this->deleteVehicleByTourId($tour_id);
+            $this->deleteImageTourDetailByTourId($tour_id);
+
+            // Sau đó, xóa tour chính
+            $this->deleteTour($tour_id);
+
+            // Commit giao dịch
+            $this->conn->commit();
+            return true;
+        } catch (Exception $e) {
+            // Rollback nếu có lỗi
+            $this->conn->rollBack();
+            return false;
+        }
+    }
 }
 ?>

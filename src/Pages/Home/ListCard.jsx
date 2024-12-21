@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Space, Spin } from "antd";
 import { database } from "../../firebase";
 import { getDatabase, ref, child, get, set } from "firebase/database";
-import CardItem from "./Card";
+import CardItem from "../../Component/Card/Card";
 import { Link } from "react-router-dom";
 import url from "../../config";
 import axios from "axios";
@@ -15,7 +15,7 @@ export default function ListCard() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`${url}/gettourtype.php?type=moi_nhat`);
+                const response = await axios.get(`${url}/get_tour_moi_nhat.php?moi_nhat=true`);
                 setData(response.data);
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -41,7 +41,7 @@ export default function ListCard() {
     }
 
     console.log(data);
-    
+
 
     const ListCard = () => {
         return (

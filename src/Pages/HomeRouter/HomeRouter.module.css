@@ -174,7 +174,7 @@
     height: 400px;
     display: flex;
     flex-direction: column;
-    background-image: url("https://i.pinimg.com/564x/44/c0/e0/44c0e0d4babe32401d97a0ebbb716f90.jpg");
+    background-image: url("https://pantravel.vn/wp-content/uploads/2023/11/canh-dep-nhu-tranh-ve-tai-ho-moraine.jpg");
     background-size: cover;
     background-attachment: fixed;
     background-position: center center;
@@ -186,7 +186,9 @@
     text-transform: uppercase;
 }
 .missionDes {
+    text-align: justify;
     color: #fff;
     font-size: 20px;
     margin:20px 500px;
 }
+

@@ -12,7 +12,7 @@ import {
 } from "@ant-design/icons";
 import imageUrl from "../../img/logo.webp";
 import Search from "antd/es/input/Search";
-import Footer from "../../Footer/Footer";
+import Footer from "../../Component/Footer/Footer";
 import { Route, Routes, Link, Outlet, useNavigate } from "react-router-dom";
 import { Content } from "antd/es/layout/layout";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";

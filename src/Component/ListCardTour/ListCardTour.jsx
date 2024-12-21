@@ -49,23 +49,6 @@ export default function ListCardTour(props) {
   }
 
   const ListCardTour = () => {
-    const DataKeys = Object.keys(data);
-    const dataToDisplay = DataKeys.slice(0, 4);
-    //Hiển thị giới hạn
-    // return (
-    //   <div>
-    //     {dataToDisplay.map((productKey) => (
-    //       <Card
-    //         key={productKey}
-    //         name={data[productKey].name}
-    //         price={data[productKey].price}
-    //         imgSrc={data[productKey].img}
-    //       />
-    //     ))}
-    //   </div>
-    // );
-
-    //Hiển thị tất cả
     return (
       <div>
         {Object.keys(data).map((item) => (

@@ -1,0 +1,213 @@
+.addTourContainer {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
+    height: 950px;
+}
+
+.formContainer {
+    width: 48%;
+    /* Form chiếm 48% chiều rộng */
+}
+
+.tourListContainer {
+    width: 48%;
+    overflow: auto;
+    padding-left: 20px;
+    height: 580px;
+    border-left: 2px solid #ddd;
+}
+
+.formGroup {
+    margin-bottom: 20px;
+}
+
+.formGroup label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.formGroup input,
+.formGroup select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.imagePreview {
+    margin-top: 10px;
+    max-width: 200px;
+    max-height: 200px;
+    object-fit: cover;
+}
+
+.submitButton {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.submitButton:hover {
+    background-color: #45a049;
+}
+
+.tourListContainer ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.tourListContainer li {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.tourListContainer h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.tourListContainer p {
+    margin: 5px 0;
+    color: #555;
+}
+
+.textEllipsis {
+    white-space: nowrap;
+    /* Không cho phép xuống dòng */
+    overflow: hidden;
+    /* Ẩn phần nội dung tràn ra */
+    text-overflow: ellipsis;
+    /* Thêm "..." ở cuối dòng nếu nội dung bị cắt */
+}
+
+.modal-container {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
+
+.modal-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.form-input,
+.form-textarea,
+.form-file-input {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.form-input:focus,
+.form-textarea:focus,
+.form-file-input:focus {
+    border-color: #8bc6ec;
+}
+
+.btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-add {
+    background-color: #8bc6ec;
+    color: white;
+}
+
+.btn-danger {
+    background-color: #ff4d4f;
+    color: white;
+}
+
+.btn-submit {
+    background-color: #4caf50;
+    color: white;
+}
+
+.btn-add:hover,
+.btn-danger:hover,
+.btn-submit:hover {
+    opacity: 0.9;
+}
+
+.schedule-group {
+    background-color: #ffffff;
+    border: 1px solid #eee;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.schedule-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #444;
+}
+
+.form-actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.form-message {
+    color: #4caf50;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+
+@media screen and (max-width: 768px) {
+    .addTourContainer {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .formContainer,
+    .tourListContainer {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .tourListContainer {
+        padding-left: 0;
+        border-left: none;
+    }
+}

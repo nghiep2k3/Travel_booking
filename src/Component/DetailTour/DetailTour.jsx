@@ -32,7 +32,7 @@ export default function DetailTour() {
     const [data, setData] = useState();
     const { id_tour } = useParams();
     console.log(`${url}/detail_tour.php?id=${id_tour}`);
-    
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -293,6 +293,7 @@ export default function DetailTour() {
                 </div>
                 <div className={style.Content_Header}>
                     <div className={style.SetupCarousel}>
+                        {console.log(111111, data.image_tour_detail[0].ImgCrs3)}
                         <Carousel
                             ref={carouselRef}
                             style={{
@@ -307,9 +308,9 @@ export default function DetailTour() {
                             <div>
                                 <img src={`${data.image_tour_detail[0].ImgCrs2}`} alt="" />
                             </div>
-                            <div>
+                            {data.image_tour_detail[0].ImgCrs3 != ' ' ? <div>
                                 <img src={`${data.image_tour_detail[0].ImgCrs3}`} alt="" />
-                            </div>
+                            </div> : ''}
                         </Carousel>
                     </div>
                     <div className={style.ContentTour}>
@@ -450,9 +451,9 @@ export default function DetailTour() {
                 <p style={{ width: 130 }} onClick={() => handleSlideChange(1)}>
                     <img style={{ maxWidth: "100%" }} src={`${data.image_tour_detail[0].ImgCrs2}`} alt="" />
                 </p>
-                <p style={{ width: 130 }} onClick={() => handleSlideChange(2)}>
+                {data.image_tour_detail[0].ImgCrs3 != ' ' ? <p style={{ width: 130 }} onClick={() => handleSlideChange(2)}>
                     <img style={{ maxWidth: "100%" }} src={`${data.image_tour_detail[0].ImgCrs3}`} alt="" />
-                </p>
+                </p> : <span style={{ width: 130 }}></span>}
             </div>
 
 
@@ -608,6 +609,7 @@ export default function DetailTour() {
                 {data.schedule.map((item, index) => {
                     return (
                         <div key={index}>
+                            {index == 1 ?  <img src={`${data.image_tour_detail[0].ImgCrs2}`} /> : ''}
                             <b>NGÀY {index + 1}: {item.title}</b>
                             <p>{item.content}</p>
                         </div>

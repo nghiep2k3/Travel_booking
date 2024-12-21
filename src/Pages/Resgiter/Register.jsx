@@ -197,8 +197,8 @@ const Register = () => {
                         <Link to="/">
                             <p style={{ fontSize: 20, fontFamily: "Poppins", display: 'flex', justifyContent: 'center', alignItems: 'center' }}> <LeftCircleTwoTone /> Go home</p>
                         </Link>
-                        <Link to="/Resgiter">
-                            <p style={{ fontSize: 20, fontFamily: "Poppins", display: 'flex', justifyContent: 'center', alignItems: 'center' }}>Resgiter now! <RightCircleTwoTone /></p>
+                        <Link to="/Login">
+                            <p style={{ fontSize: 20, fontFamily: "Poppins", display: 'flex', justifyContent: 'center', alignItems: 'center' }}>Sign In! <RightCircleTwoTone /></p>
                         </Link>
                     </div>
                 </Form.Item>

@@ -18,47 +18,41 @@ import RoleZZ from "../Role/Role";
 //Cách dùng chung className
 // className={`${style.ButtonClick} ${selectedButton === 'a' ? 'selected' : ''} common-button`}
 
-import imageUrl1 from "../../img/banner1.jpg";
-import imageUrl2 from "../../img/banner2.jpg";
-import imageUrl3 from "../../img/banner3.jpg";
-import imageUrl4 from "../../img/banner4.jpg";
-import imageUrl5 from "../../img/banner5.jpg";
-import imageUrl6 from "../../img/banner6.jpg";
-
 import BgCF1 from "../../img/background_img1.webp";
 import BgCF2 from "../../img/bg2.webp";
-import BgCF3 from "../../img/bg3.webp";
 import BgCF4 from "../../img/bg4.webp";
 import BgCF5 from "../../img/bg5.webp";
 
 import Search from "antd/es/input/Search";
-import Card from "../Home/Card";
-import CardFavorite from "./CardFavorite";
-import Footer from "../../Footer/Footer";
+import CardFavorite from "../../Component/CardFavorite/CardFavorite";
+import Footer from "../../Component/Footer/Footer";
 import ListCard from "./ListCard";
-import ListCart2 from "./ListCard2";
 
-import ChauA from "./Asia/Asia";
-import ChauAu from "./Europe/Europe";
-import ChauMy from "./Americas/Americas";
-import ChauUc from "./Australia/Australia";
+import ChauA from "../Foreign/Asia/Asia";
+import ChauAu from "../Foreign/Europe/Europe";
+import ChauMy from "../Foreign/Americas/Americas";
+import ChauUc from "../Foreign/Australia/Australia";
 import "animate.css";
 
-import Bac from "../../VietNam/Bac/Bac";
-import Nam from "../../VietNam/Nam/Nam";
-import Trung from "../../VietNam/Trung/Trung";
+import Bac from "../VietNam/Bac/Bac";
+import Nam from "../VietNam/Nam/Nam";
+import Trung from "../VietNam/Trung/Trung";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
+import url from "../../config";
+
 
 const Home = () => {
     const navigate = useNavigate();
     const [tours, setTours] = useState([]);
+    const [data, setData] = useState();
     const [isLoggedIn, setIsLoggedIn] = useState();
     const [options, setOptions] = useState([]);
 
     const formatPrice = (price) => {
         return parseInt(price).toLocaleString("vi-VN") + "đ";
-      };
+    };
 
     const handleSearch = (value) => {
         if (value) {
@@ -67,20 +61,35 @@ const Home = () => {
                 .map((item) => ({
                     value: item.title,
                     label: (
-                        <div style={{ display: "flex", alignItems: "center" }}>
-                            <img src={item.srcImg} alt={item.title} style={{ width: 40, height: 40, marginRight: 10 }} />
-                            <div>
-                                <div>{item.title}</div>
-                                <div style={{ color: "gray" }}>Giá: {formatPrice(item.price)}</div>
+                        <Link to={`/detail/${item.id}`}>
+                            <div style={{ display: "flex", alignItems: "center" }}>
+                                <img src={item.srcImg} alt={item.title} style={{ width: 40, height: 40, marginRight: 10 }} />
+                                <div>
+                                    <div>{item.title}</div>
+                                    <div style={{ color: "gray" }}>Giá: {formatPrice(item.price)}</div>
+                                </div>
                             </div>
-                        </div>
+                        </Link>
                     ),
                 }));
+            console.log(data)
             setOptions(filteredOptions);
         } else {
             setOptions([]);
         }
     };
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`${url}/tour.php`);
+                setData(response.data);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     useEffect(() => {
         const loggedIn = localStorage.getItem("LogIn");
@@ -140,50 +149,6 @@ const Home = () => {
         },
     ];
 
-    const data = [
-        {
-            "id": 1,
-            "title": "Tour Đà Nẵng - Hội An",
-            "price": "5000000.00",
-            "srcImg": "https://bizweb.dktcdn.net/thumb/large/100/299/077/products/53916-1315037279.jpg?v=1529554090113"
-        },
-        {
-            "id": 2,
-            "title": "Tour Hà Nội - Sapa",
-            "price": "7000000.00",
-            "srcImg": "https://bizweb.dktcdn.net/thumb/large/100/299/077/products/anam-resort-nha-trang-vietnam-23.jpg?v=1529554176777"
-        },
-        {
-            "id": 3,
-            "title": "Tour Phú Quốc",
-            "price": "6000000.00",
-            "srcImg": "https://bizweb.dktcdn.net/thumb/large/100/299/077/products/grand-britain-europe-tour-5-min.jpg?v=1529553857067"
-        },
-        {
-            "id": 4,
-            "title": "Tour Đà Lạt",
-            "price": "4000000.00",
-            "srcImg": "https://bizweb.dktcdn.net/thumb/large/100/299/077/products/83864b64404979-5ad0e1bdba9b2.jpg?v=1529553163227"
-        },
-        {
-            "id": 5,
-            "title": "Tour Nha Trang",
-            "price": "5500000.00",
-            "srcImg": "https://bizweb.dktcdn.net/thumb/large/100/299/077/products/0r2a5723.jpg?v=1529553943837"
-        },
-        {
-            "id": 6,
-            "title": "Tour Hạ Long",
-            "price": "6500000.00",
-            "srcImg": "https://bizweb.dktcdn.net/thumb/large/100/299/077/products/1-large1.jpg?v=1529553697103"
-        },
-        {
-            "id": 9,
-            "title": "Hồ Chí Minh 2",
-            "price": "100.00",
-            "srcImg": "https://bizweb.dktcdn.net/thumb/large/100/299/077/products/1-large1.jpg?v=1529553697103"
-        }
-    ];
 
     //Component Content3
 

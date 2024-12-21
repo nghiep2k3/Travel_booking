@@ -72,7 +72,7 @@ const Login = () => {
                 <Form.Item
                     label={
                         <label htmlFor="username" className={styles.textf}>
-                            Email
+                            Username
                         </label>
                     }
                     name="username" // truyền lên data
